@@ -1,4 +1,5 @@
 from urllib.parse import urlsplit, parse_qsl
+from http.cookies import SimpleCookie
 
 def parse(query: str) -> dict:
     dict_of_query = dict(parse_qsl(urlsplit(query).query))
@@ -14,7 +15,12 @@ if __name__ == '__main__':
 
 
 def parse_cookie(query: str) -> dict:
-    return {}
+    cookie = SimpleCookie()
+    cookie.load(query)
+    dict_cookies = {}
+    for key, morsel in cookie.items():
+        dict_cookies[key] = morsel.value
+    return dict_cookies
 
 
 if __name__ == '__main__':

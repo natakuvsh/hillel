@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style> table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+  th, td {
+    padding: 5px;
+}
+    </style>
+  </head>
+<body>
+  <h1>Currently there are {{ number }} astronauts in space! </h1>
+    <table style="width:30%">
+      <tr>
+        <th>Name</th>
+        <th>Craft</th>
+      </tr>
+        {% for person in space %}
+          <tr>
+            <td>{{ person['name'] }}</td>
+            <td>{{ person['craft'] }}</td>
+          </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<html>
+    <head></head>
+    <body>
+        <form method="post">
+            <table>
+                <tr>
+                    <td>Name</td>
+                    <td>
+                        <input type="text" name="name">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Duration</td>
+                    <td>
+                        <input type="number" name="duration">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Artist</td>
+                    <td>
+                        <input type="text" name="artist" list="artistname" >
+                            <datalist id="artistname">
+                                {% for artist in artists %}
+                                <option>{{ artist.name }}</option>
+                                {% endfor %}
+                            </datalist>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="submit">Add</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </body>
+</html>

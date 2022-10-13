@@ -54,7 +54,7 @@ class StudentCreateView(TemplateView):
     template_name = 'create_student.html'
 
     def get_context_data(self, **kwargs):
-        context = super(StudentCreateView,self).get_context_data(**kwargs)
+        context = super(StudentCreateView, self).get_context_data(**kwargs)
         context['form'] = StudentCreateForm()
 
         return context

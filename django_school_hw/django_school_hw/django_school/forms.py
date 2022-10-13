@@ -37,7 +37,11 @@ class StudentCreateForm(forms.Form):
     surname = forms.CharField(required=True, strip=True, validators=[check_surname])
     age = forms.IntegerField(min_value=18, max_value=130)
     email = forms.EmailField()
-    group = forms.ModelChoiceField(queryset=Group.objects.all())
+    course = forms.ModelChoiceField(queryset=Course.objects.all())
+    group = forms.ModelMultipleChoiceField(
+        queryset=Group.objects.all(),
+        widget=forms.widgets.CheckboxSelectMultiple
+    )
 
     def clean_name(self):
         name = self.cleaned_data['name']
@@ -57,8 +61,9 @@ class StudentCreateForm(forms.Form):
             surname=self.cleaned_data['surname'],
             age=self.cleaned_data['age'],
             email=self.cleaned_data['email'],
-            group=self.cleaned_data['group'],
+            course=self.cleaned_data['course'],
         )
 
+        student.group.add(*self.cleaned_data['group'])
         return student
 

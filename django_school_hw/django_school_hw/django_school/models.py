@@ -9,7 +9,7 @@ class NameAgeEmail(models.Model):
     name = models.CharField(max_length=255)
     age = models.PositiveIntegerField(null=True)
     email = models.EmailField(max_length=255, unique=True)
-    group = models.ForeignKey("django_school.Group", on_delete=models.SET_NULL, null=True)
+    group = models.ManyToManyField("django_school.Group")
 
     class Meta:
         abstract = True
@@ -19,11 +19,12 @@ class NameAgeEmail(models.Model):
 
 
 class Teacher(NameAgeEmail):
-   pass
+    pass
 
 
 class Student(NameAgeEmail):
-    surname = models.CharField(max_length=255, unique=True)
+    surname = models.CharField(max_length=255, unique=True, null=True)
+    course = models.ForeignKey("django_school.Course", on_delete=models.SET_NULL, null=True)
     pass
 
 

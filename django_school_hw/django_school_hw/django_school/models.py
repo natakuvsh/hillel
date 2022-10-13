@@ -23,6 +23,7 @@ class Teacher(NameAgeEmail):
 
 
 class Student(NameAgeEmail):
+    surname = models.CharField(max_length=255, unique=True)
     pass
 
 
@@ -38,6 +39,14 @@ class ProductManager(models.Manager):
     def get_queryset(self):
         queryset = super(ProductManager, self).get_queryset()
         return queryset.filter(teacher__isnull=False)
+
+    def get_prefetched_selected(self):
+        return self.get_queryset().select_related(
+                'teacher'
+            ).prefetch_related(
+                'group'
+            )
+
 
 
 class Course(models.Model):

@@ -22,5 +22,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.IndexView.as_view()),
+    path('search/', views.SearchView.as_view()),
+    path('course/create/', views.CourseCreateView.as_view()),
+    path('student/create/', views.StudentCreateView.as_view()),
     path('__debug__/', include('debug_toolbar.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

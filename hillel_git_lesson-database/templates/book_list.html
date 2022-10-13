@@ -1,0 +1,10 @@
+<html>
+    <head></head>
+    <body>
+        <ul>
+            {% for book in books %}
+                <li>{{ book.id }}. {{ book.name }} by {{ book.author.name }}</li>
+            {% endfor %}
+        </ul>
+    </body>
+</html>

@@ -1,0 +1,37 @@
+<html>
+    <head></head>
+    <body>
+        <form method="post">
+            <table>
+                <tr>
+                    <td>Name</td>
+                    <td>
+                        <input type="text" name="name">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Year</td>
+                    <td>
+                        <input type="number" name="year">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Author</td>
+                    <td>
+                        <select name="author">
+                            <option> ---- </option>
+                            {% for author in authors %}
+                                <option value="{{ author.id }}">{{ author.name }} {% if author.pseudonim %} ({{ author.pseudonim }}) {% endif %}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="submit">Add</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </body>
+</html>

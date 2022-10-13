@@ -1,7 +1,8 @@
-
+from urllib.parse import urlsplit, parse_qsl
 
 def parse(query: str) -> dict:
-    return {}
+    dict_of_query = dict(parse_qsl(urlsplit(query).query))
+    return dict_of_query
 
 
 if __name__ == '__main__':

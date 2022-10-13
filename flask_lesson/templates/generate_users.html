@@ -1,0 +1,14 @@
+<html>
+    <head></head>
+    <body>
+        <form method="post">
+            <input style="width:300px;font-size:14pt;" type="number" placeholder="Enter the number of users" name="users_count">
+            <button style="width:300px;font-size:14pt;" type="submit">Show users!</button>
+        </form>
+        <ol>
+        {% for user in users_list %}
+            <li>{{ user }}</li>
+        {% endfor %}
+        </ol>
+    </body>
+</html>

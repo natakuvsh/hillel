@@ -1,0 +1,10 @@
+<html>
+    <head></head>
+    <body>
+        <ol>
+            {% for song in songs %}
+                <li> {{ song.name }} by {{ song.artist.name }}</li>
+            {% endfor %}
+        </ol>
+    </body>
+</html>

@@ -51,7 +51,7 @@ class ProductManager(models.Manager):
 
 
 class Course(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     description = models.TextField()
     teacher = models.ForeignKey("Teacher", on_delete=models.SET_NULL, null=True, blank=True)
     theses = models.TextField()

@@ -19,6 +19,11 @@ class CourseCreateForm(forms.Form):
         widget=forms.widgets.CheckboxSelectMultiple
     )
 
+    def clean_name(self):
+        if Course.objects.filter(name=self.cleaned_data['name']):
+            raise forms.ValidationError("Course with this name already exists. Enter another name")
+        return name
+
     def create_course(self):
         course = Course.objects.create(
             name=self.cleaned_data['name'],

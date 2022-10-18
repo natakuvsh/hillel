@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django_school',
 
     "debug_toolbar",
+    "bootstrap5",
 ]
 
 MIDDLEWARE = [
@@ -68,6 +69,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django_school.context_processing.get_all_courses'
             ],
         },
     },

@@ -40,3 +40,19 @@ class CourseCreateForm(forms.ModelForm):
             'theses': forms.Textarea(attrs={'cols': 50, 'rows': 4}),
             'description': forms.Textarea(attrs={'cols': 50, 'rows': 4})
         }
+
+
+class StudentUpdateForm(forms.ModelForm):
+
+    class Meta:
+        model = Student
+        fields = '__all__'
+        widgets = {
+            'group': forms.widgets.CheckboxSelectMultiple(),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(StudentUpdateForm, self).__init__(*args, **kwargs)
+        self.fields['course'].queryset = Course.objects.order_by('-name')
+        self.fields['surname'].widget.attrs['readonly'] = True
+        self.fields['age'].widget.attrs['readonly'] = True

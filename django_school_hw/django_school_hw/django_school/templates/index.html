@@ -16,7 +16,7 @@
                             {% for group in course.group.all %}
                                 <a href="#" class="btn btn-light">{{ group.name }}</a>
                             {% endfor %}
-                            <a href="{% url 'course_update' course_id=course.id %}" class="align-self-end btn btn-lg btn-block btn-success" style="margin-top: auto;">Edit</a>
+                            <a href="{% url 'add_update:course_update' course_id=course.id %}" class="align-self-end btn btn-block btn-outline-secondary" style="margin-top: auto;">Edit</a>
                         </div>
                     </div>
                 </div>

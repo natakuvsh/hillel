@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import path, include
 from django_school import views
 from django.conf import settings
@@ -23,9 +24,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.IndexView.as_view(), name='home'),
     path('search/', views.SearchView.as_view(), name='search'),
-    path('course/create/', views.CourseCreateView.as_view(), name='course_create'),
-    path('student/create/', views.StudentCreateView.as_view(), name='student_create'),
-    path('student/<int:student_id>/edit', views.StudentUpdateView.as_view(), name='student_update'),
-    path('course/<int:course_id>/edit', views.CourseUpdateView.as_view(), name='course_update'),
+    path('login/', LoginView.as_view(template_name='login.html'), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path('profile/', views.ProfileView.as_view(), name='profile'),
+    path('', include(('django_school.urls', 'django_school'), namespace='add_update')),
     path('__debug__/', include('debug_toolbar.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

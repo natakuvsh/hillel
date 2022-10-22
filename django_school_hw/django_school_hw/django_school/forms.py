@@ -56,3 +56,4 @@ class StudentUpdateForm(forms.ModelForm):
         self.fields['course'].queryset = Course.objects.order_by('-name')
         self.fields['surname'].widget.attrs['readonly'] = True
         self.fields['age'].widget.attrs['readonly'] = True
+

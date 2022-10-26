@@ -2,9 +2,14 @@
 {% load my_tags %}
 
 {% block content %}
+<br>
      <div class="container">
-         <br>
-            {% include 'includes/course_list.html' %}
+        <div class="row">
+            <h1 style="text-align: center;">Popular</h1>
+            <p>
+            {% get_popular_courses %}
+            </p>
+        </div>
      </div>
      <div>
          <div class="pagination">

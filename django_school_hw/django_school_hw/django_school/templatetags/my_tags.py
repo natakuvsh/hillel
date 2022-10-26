@@ -1,4 +1,7 @@
 from django import template
+from django_school.models import Course, Student
+from django.db.models import Count
+
 
 register = template.Library()
 
@@ -12,3 +15,11 @@ def check_even_num(num_list):
 @register.filter
 def count_words(string):
     return len(string.split())
+
+
+@register.inclusion_tag('includes/course_list.html')
+def get_popular_courses():
+    return {
+        'course_list': Course.objects.get_prefetched_selected().annotate(popular=Count('student')).order_by('-popular')[:5]
+    }
+

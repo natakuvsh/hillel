@@ -1,0 +1,29 @@
+
+{% extends 'base.html' %}
+{% load my_tags %}
+
+{% block content %}
+<br>
+     <div class="container">
+        <div class="row">
+            <h1 style="text-align: center;">{% get_name_by_cat_id view.kwargs.category_id %} courses</h1>
+            <p>
+            {% get_courses_by_category view.kwargs.category_id %}
+            </p>
+        </div>
+     </div>
+     <div>
+         <div class="pagination">
+             <span class="step-links">
+                 {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}">&laquo; previous</a>
+                 {% endif %}
+                 <span class="current">
+                     Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                 </span>
+                 {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next &raquo;</a>
+                 {% endif %}
+             </span>
+         </div>
+{% endblock content %}

@@ -1,6 +1,6 @@
-from django_school.models import Course
+from django_school.models import Category
 
-def get_all_courses(request):
+def get_all_categories(request):
     return {
-        'courses': Course.objects.all()
+        'categories': Category.objects.all()
     }

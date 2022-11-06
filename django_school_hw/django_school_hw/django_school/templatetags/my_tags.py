@@ -1,7 +1,7 @@
 from django import template
-from django_school.models import Course, Student, Group, Category
+from django_school.models import Course, Group, Category
 from django.db.models import Count
-from celery import Celery
+
 
 register = template.Library()
 

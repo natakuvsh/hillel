@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, FormView, CreateView, View, UpdateView, TemplateView
 from django_school.models import Student, Teacher, Group, Course, Category
-from django_school.forms import CourseCreateForm, StudentCreateForm, StudentUpdateForm
+from django_school.forms import CourseCreateForm, StudentCreateForm, StudentUpdateForm, TestForm
 
 
 
@@ -59,6 +59,7 @@ class CourseCreateView(FormView):
     success_url = '/'
 
     def form_valid(self, form):
+        form.send_email()
         form.save()
         return super().form_valid(form)
 
@@ -90,4 +91,6 @@ class CourseByCat(UpdateView):
 
 class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = 'profile.html'
+
+
 

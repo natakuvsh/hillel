@@ -58,6 +58,8 @@ class Course(models.Model):
     group = models.ManyToManyField("Group")
     image = models.ImageField(upload_to=course_upload_path, null=True)
 
+    created_at = models.DateTimeField(auto_now_add=True)
+
     objects = ProductManager()
 
     def __str__(self):

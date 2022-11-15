@@ -9,6 +9,8 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
+import os
+import socket
 from datetime import timedelta
 from pathlib import Path
 
@@ -83,11 +85,19 @@ WSGI_APPLICATION = 'django_school_hw.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.getenv('MYSQL_DATABASE'),
+        'USER': os.getenv('MYSQL_USER'),
+        'PASSWORD': os.getenv('MYSQL_PASSWORD'),
+        'HOST': os.getenv('MYSQL_HOST'),
+        'PORT': os.getenv('MYSQL_PORT'),
     }
 }
 
+try:
+    from .local_settings import *
+except ImportError:
+    pass
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -136,6 +146,10 @@ INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
+# tricks to have debug toolbar when developing with docker
+ip = socket.gethostbyname(socket.gethostname())
+INTERNAL_IPS += [ip[:-1] + '1']
+
 AUTH_USER_MODEL = 'django_school.CustomUser'
 
 LOGIN_REDIRECT_URL = '/profile/'
@@ -159,3 +173,5 @@ CELERY_BEAT_SCHEDULE = {
 
 RANDOM_STRING_CHARS = "abcdefghijklmnopqrstuvwxyz"
 NO_IMAGE_FILEPATH = 'media/course/no_image/no_image.jpg'
+
+CELERY_BROKER_URL = "amqp://rabbitmq"

@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    restart: always
+    command: 'bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"'
+    env_file:
+     - .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+
+  celery:
+    build: .
+    restart: on-failure
+    command: 'bash -c "celery -A django_school_hw worker -l INFO -B"'
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - rabbitmq
+
+  rabbitmq:
+    image: rabbitmq
+
+  db:
+      image: mysql:5.7
+      restart: always
+      ports:
+        - "3306:3306"
+      volumes:
+        - ./.data/db:/var/lib/mysql
+      env_file:
+        - .env
+
+volumes:
+  db:
+
+
+
+

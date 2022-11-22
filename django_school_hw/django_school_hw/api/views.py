@@ -19,3 +19,4 @@ class GroupViewSet(ModelViewSet):
 class TeacherViewSet(ModelViewSet):
     serializer_class = TeacherSerializer
     queryset = Teacher.objects.all()
+

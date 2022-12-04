@@ -38,6 +38,11 @@ services:
       env_file:
         - .env
 
+  cache:
+      image: memcached
+      ports:
+          - "11211:11211"
+
 volumes:
   db:
 

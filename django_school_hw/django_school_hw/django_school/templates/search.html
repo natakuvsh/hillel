@@ -5,11 +5,12 @@
 <br>
      <div class="container">
         <div class="row">
-            <h1 style="text-align: center;">Popular</h1>
-            <p>
-            {% get_popular_courses %}
-            </p>
+            <h1 style="text-align: center;">Search results</h1>
         </div>
+         <div class="row">
+             {% include 'includes/course_list.html' with course_list=search_results %}
+
+         </div>
      </div>
      <div>
          <div class="pagination">

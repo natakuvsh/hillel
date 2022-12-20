@@ -1,3 +1,4 @@
+
 {% extends 'base.html' %}
 {% load my_tags %}
 
@@ -5,9 +6,9 @@
 <br>
      <div class="container">
         <div class="row">
-            <h1 style="text-align: center;">Popular</h1>
+            <h1 style="text-align: center;">{% get_name_by_cat_id view.kwargs.category_id %} courses</h1>
             <p>
-            {% get_popular_courses %}
+            {% get_courses_by_category view.kwargs.category_id %}
             </p>
         </div>
      </div>
@@ -25,5 +26,4 @@
                  {% endif %}
              </span>
          </div>
-     </div>
-{% endblock %}
+{% endblock content %}

@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
-from django.views.generic import ListView, FormView, CreateView, UpdateView, TemplateView
+from django.views.generic import ListView, FormView, CreateView, UpdateView, TemplateView, DetailView
 from django_school.models import Student, Course, Category
 from django_school.forms import CourseCreateForm, StudentCreateForm, StudentUpdateForm
 
@@ -95,3 +95,12 @@ class CourseByCat(UpdateView):
 @method_decorator(cache_page(100, key_prefix='profile'), 'get')
 class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = 'profile.html'
+
+
+class CourseDetailView(DetailView):
+    template_name = 'course.html'
+    model = Course
+
+
+class ApiTeachersView(TemplateView):
+    template_name = 'api_ui.html'

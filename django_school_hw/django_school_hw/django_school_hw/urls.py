@@ -30,5 +30,7 @@ urlpatterns = [
     path('profile/', views.ProfileView.as_view(), name='profile'),
     path('', include(('django_school.urls', 'django_school'), namespace='add_update')),
     path('api/v1/', include(('api.urls', 'api'), namespace='api')),
+    path('api/teachers', views.ApiTeachersView.as_view(), name='api_ui'),
     path('__debug__/', include('debug_toolbar.urls')),
+    path('course/<int:pk>/', views.CourseDetailView.as_view(), name='course')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

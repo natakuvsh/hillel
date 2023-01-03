@@ -1,45 +1,29 @@
 {% extends 'base.html' %}
+{% load my_tags %}
 
 {% block content %}
+<br>
      <div class="container">
-         <br>
-            <div class="row">
-                {% for course in course_list %}
-
-                <div class="col-md-3">
-                    <div class="card" style="margin-bottom: 10px; margin-left: 50px; height: 450px; width: 250px;">
-                        <img src="{{ course.image.url }}" style="max-height: 120px;" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ course.name }}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted"> {{ course.description }}</h6>
-                            <p class="card-text">{{ course.theses }}</p>
-                            {% for group in course.group.all %}
-                                <a href="#" class="btn btn-light">{{ group.name }}</a>
-                            {% endfor %}
-                            <a href="{% url 'add_update:course_update' course_id=course.id %}" class="align-self-end btn btn-block btn-outline-secondary" style="margin-top: auto;">Edit</a>
-                        </div>
-                    </div>
-                </div>
-
-                {% endfor %}
-            </div>
-         <div>
-                <div class="pagination">
-                    <span class="step-links">
-                        {% if page_obj.has_previous %}
-                            <a href="?page={{ page_obj.previous_page_number }}">&laquo; previous</a>
-                        {% endif %}
-
-                        <span class="current">
-                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                        </span>
-
-                        {% if page_obj.has_next %}
-                            <a href="?page={{ page_obj.next_page_number }}">next &raquo;</a>
-                        {% endif %}
-                    </span>
-                </div>
-            </div>
-    </div>
-
+        <div class="row">
+            <h1 style="text-align: center;">Popular</h1>
+            <p>
+            {% get_popular_courses %}
+            </p>
+        </div>
+     </div>
+     <div>
+         <div class="pagination">
+             <span class="step-links">
+                 {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}">&laquo; previous</a>
+                 {% endif %}
+                 <span class="current">
+                     Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                 </span>
+                 {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next &raquo;</a>
+                 {% endif %}
+             </span>
+         </div>
+     </div>
 {% endblock %}

@@ -9,7 +9,7 @@ class NameAgeEmail(models.Model):
     name = models.CharField(max_length=255)
     age = models.PositiveIntegerField(null=True)
     email = models.EmailField(max_length=255, unique=True)
-    group = models.ForeignKey("django_school.Group", on_delete=models.SET_NULL, null=True)
+    group = models.ManyToManyField("django_school.Group")
 
     class Meta:
         abstract = True
@@ -19,10 +19,12 @@ class NameAgeEmail(models.Model):
 
 
 class Teacher(NameAgeEmail):
-   pass
+    pass
 
 
 class Student(NameAgeEmail):
+    surname = models.CharField(max_length=255, unique=True, null=True)
+    course = models.ForeignKey("django_school.Course", on_delete=models.SET_NULL, null=True)
     pass
 
 
@@ -39,9 +41,17 @@ class ProductManager(models.Manager):
         queryset = super(ProductManager, self).get_queryset()
         return queryset.filter(teacher__isnull=False)
 
+    def get_prefetched_selected(self):
+        return self.get_queryset().select_related(
+                'teacher'
+            ).prefetch_related(
+                'group'
+            )
+
+
 
 class Course(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     description = models.TextField()
     teacher = models.ForeignKey("Teacher", on_delete=models.SET_NULL, null=True, blank=True)
     theses = models.TextField()

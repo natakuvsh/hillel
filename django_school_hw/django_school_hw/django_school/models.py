@@ -105,6 +105,12 @@ class Rate(models.Model):
         return self.vendor
 
 
+class Lot(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    bid = models.DecimalField(max_digits=20, decimal_places=1)
+    closed = models.BooleanField(default=False)
+
+
 @receiver(post_save, sender=Course)
 def delete_cache(**kwargs):
     from django.core.cache import cache

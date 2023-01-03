@@ -1,11 +1,36 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 
 
 def course_upload_path(obj, file):
     return f'course/{obj.name}/{file}'
+
+class CourseManager(models.Manager):
+
+    def get_queryset(self):
+        queryset = super(CourseManager, self).get_queryset()
+        return queryset.filter(teacher__isnull=False)
+
+    def get_prefetched_selected(self):
+        return self.get_queryset().select_related(
+            'teacher'
+        ).prefetch_related(
+            'group'
+        )
+
+
+class StudentManager(models.Manager):
+
+    def get_queryset(self):
+        queryset = super(StudentManager, self).get_queryset()
+        return queryset
+
+    def get_prefetched_selected(self):
+        return self.get_queryset().select_related(
+            'course'
+        ).prefetch_related(
+            'group'
+        )
 
 
 class NameAgeEmail(models.Model):
@@ -28,7 +53,8 @@ class Teacher(NameAgeEmail):
 class Student(NameAgeEmail):
     surname = models.CharField(max_length=255, unique=True, null=False)
     course = models.ForeignKey("django_school.Course", on_delete=models.SET_NULL, null=True)
-    pass
+
+    objects = StudentManager()
 
 
 class Group(models.Model):
@@ -36,20 +62,6 @@ class Group(models.Model):
 
     def __str__(self):
         return self.name
-
-
-class ProductManager(models.Manager):
-
-    def get_queryset(self):
-        queryset = super(ProductManager, self).get_queryset()
-        return queryset.filter(teacher__isnull=False)
-
-    def get_prefetched_selected(self):
-        return self.get_queryset().select_related(
-                'teacher'
-            ).prefetch_related(
-                'group'
-            )
 
 
 class Course(models.Model):
@@ -62,7 +74,7 @@ class Course(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
 
-    objects = ProductManager()
+    objects = CourseManager()
 
     def __str__(self):
         return self.name

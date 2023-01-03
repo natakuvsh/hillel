@@ -14,6 +14,8 @@ import socket
 from datetime import timedelta
 from pathlib import Path
 
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -41,9 +43,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django_school',
+    'api',
 
     "debug_toolbar",
     "bootstrap5",
+    "rest_framework",
+    "rest_framework.authtoken"
 ]
 
 MIDDLEWARE = [
@@ -83,6 +88,7 @@ WSGI_APPLICATION = 'django_school_hw.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -95,7 +101,7 @@ DATABASES = {
 }
 
 try:
-    from .local_settings import *
+    from local_settings import *
 except ImportError:
     pass
 
@@ -175,3 +181,14 @@ RANDOM_STRING_CHARS = "abcdefghijklmnopqrstuvwxyz"
 NO_IMAGE_FILEPATH = 'media/course/no_image/no_image.jpg'
 
 CELERY_BROKER_URL = "amqp://rabbitmq"
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}

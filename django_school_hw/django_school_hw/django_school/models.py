@@ -1,5 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
 
 
 def course_upload_path(obj, file):
@@ -90,4 +92,18 @@ class Category(models.Model):
 
 class CustomUser(AbstractUser):
     pass
+
+
+@receiver(post_save, sender=Course)
+def delete_cache(**kwargs):
+    from django.core.cache import cache
+    cache.clear()
+    print('Deleted cache')
+
+
+@receiver(post_delete, sender=Course)
+def delete_cache(**kwargs):
+    from django.core.cache import cache
+    cache.clear()
+    print('Deleted cache')
 

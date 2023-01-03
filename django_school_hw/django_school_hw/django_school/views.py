@@ -2,12 +2,14 @@ from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from django.views.generic import ListView, FormView, CreateView, UpdateView, TemplateView
 from django_school.models import Student, Course, Category
 from django_school.forms import CourseCreateForm, StudentCreateForm, StudentUpdateForm
 
 
-
+@method_decorator(cache_page(1000, key_prefix='index'), 'get')
 class IndexView(ListView):
     template_name = 'index.html'
     model = Course
@@ -18,6 +20,7 @@ class IndexView(ListView):
         return queryset.model.objects.get_prefetched_selected()
 
 
+@method_decorator(cache_page(500, key_prefix='category'), 'get')
 class CategoryView(ListView):
     template_name = 'course_by_cat.html'
     model = Course
@@ -26,7 +29,6 @@ class CategoryView(ListView):
     def get_queryset(self):
         self.category = get_object_or_404(Category, id=self.kwargs['category_id'])
         return Course.objects.filter(group__category=self.category)
-
 
 
 class SearchView(IndexView):
@@ -42,7 +44,6 @@ class SearchView(IndexView):
                 Q(theses__icontains=query)
             )
         return super(SearchView, self).get_queryset()
-
 
 
 class StudentCreateView(CreateView):
@@ -81,7 +82,7 @@ class CourseUpdateView(UpdateView):
     pk_url_kwarg = 'course_id'
 
     def get_success_url(self):
-        return reverse_lazy('add_update:course_update', args=(self.kwargs['course_id'], ))
+        return reverse_lazy('add_update:course_update', args=(self.kwargs['course_id'],))
 
 
 class CourseByCat(UpdateView):
@@ -91,8 +92,6 @@ class CourseByCat(UpdateView):
     success_url = '/'
 
 
+@method_decorator(cache_page(100, key_prefix='profile'), 'get')
 class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = 'profile.html'
-
-
-

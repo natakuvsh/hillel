@@ -94,6 +94,23 @@ class CustomUser(AbstractUser):
     pass
 
 
+class Rate(models.Model):
+    vendor = models.CharField(max_length=255, unique=True)
+    currency_1 = models.CharField(max_length=255)
+    currency_2 = models.CharField(max_length=255)
+    rate_buy = models.DecimalField(max_digits=7, decimal_places=4)
+    rate_sell = models.DecimalField(max_digits=7, decimal_places=4)
+
+    def __str__(self):
+        return self.vendor
+
+
+class Lot(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    bid = models.DecimalField(max_digits=20, decimal_places=1)
+    closed = models.BooleanField(default=False)
+
+
 @receiver(post_save, sender=Course)
 def delete_cache(**kwargs):
     from django.core.cache import cache

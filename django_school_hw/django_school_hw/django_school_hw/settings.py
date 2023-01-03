@@ -35,6 +35,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,7 +49,8 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "bootstrap5",
     "rest_framework",
-    "rest_framework.authtoken"
+    "rest_framework.authtoken",
+    'sorl.thumbnail',
 ]
 
 MIDDLEWARE = [
@@ -149,6 +151,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = (
+     os.path.join(BASE_DIR, 'static'),
+)
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
 
@@ -205,3 +210,5 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ]
 }
+
+ASGI_APPLICATION = "django_school_hw.asgi.application"

@@ -1,9 +1,9 @@
 from django import forms
-from django_school.models import Course, Student
+from django_school.models import Course, Student, Lot
 from django_school.tasks import send_emails_new_course
 
-class StudentCreateForm(forms.ModelForm):
 
+class StudentCreateForm(forms.ModelForm):
     age = forms.IntegerField(min_value=18, max_value=130)
 
     class Meta:
@@ -31,7 +31,6 @@ class StudentCreateForm(forms.ModelForm):
 
 
 class CourseCreateForm(forms.ModelForm):
-
     class Meta:
         model = Course
         fields = '__all__'
@@ -47,7 +46,6 @@ class CourseCreateForm(forms.ModelForm):
 
 
 class StudentUpdateForm(forms.ModelForm):
-
     class Meta:
         model = Student
         fields = '__all__'
@@ -61,3 +59,8 @@ class StudentUpdateForm(forms.ModelForm):
         self.fields['surname'].widget.attrs['readonly'] = True
         self.fields['age'].widget.attrs['readonly'] = True
 
+
+class CreateLotForm(forms.ModelForm):
+    class Meta:
+        model = Lot
+        fields = ('name', 'bid')

@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -147,3 +147,15 @@ AUTHENTICATION_BACKENDS = [
     'django_school.auth_backend.EmailBackend'
 ]
 
+CELERY_TIME_ZONE = TIME_ZONE
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+CELERY_BEAT_SCHEDULE = {
+    'send_beat':{
+        'task': 'django_school.tasks.send_emails_beat',
+        'schedule': timedelta(hours=24)
+    }
+}
+
+RANDOM_STRING_CHARS = "abcdefghijklmnopqrstuvwxyz"
+NO_IMAGE_FILEPATH = 'media/course/no_image/no_image.jpg'

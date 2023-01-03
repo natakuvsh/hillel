@@ -29,5 +29,5 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     path('profile/', views.ProfileView.as_view(), name='profile'),
     path('', include(('django_school.urls', 'django_school'), namespace='add_update')),
-    path('__debug__/', include('debug_toolbar.urls'))
+    path('__debug__/', include('debug_toolbar.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,6 +1,6 @@
 from django import forms
 from django_school.models import Course, Student
-
+from django_school.tasks import send_emails_new_course
 
 class StudentCreateForm(forms.ModelForm):
 
@@ -40,6 +40,10 @@ class CourseCreateForm(forms.ModelForm):
             'theses': forms.Textarea(attrs={'cols': 50, 'rows': 4}),
             'description': forms.Textarea(attrs={'cols': 50, 'rows': 4})
         }
+
+    def send_email(self):
+        print(type(self.cleaned_data))
+        send_emails_new_course.delay(name=self.cleaned_data['name'], description=self.cleaned_data['description'])
 
 
 class StudentUpdateForm(forms.ModelForm):

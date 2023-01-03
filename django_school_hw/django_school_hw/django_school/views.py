@@ -1,7 +1,10 @@
 from django.db.models import Q
-from django.views.generic import ListView, FormView, CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+from django.views.generic import ListView, FormView, CreateView, View, UpdateView, TemplateView
 from django_school.models import Student, Teacher, Group, Course
-from django_school.forms import CourseCreateForm, StudentCreateForm
+from django_school.forms import CourseCreateForm, StudentCreateForm, StudentUpdateForm
+
 
 
 class IndexView(ListView):
@@ -24,7 +27,7 @@ class SearchView(IndexView):
                 Q(description__icontains=query) |
                 Q(theses__icontains=query)
             )
-        return super(SearchView,self).get_queryset()
+        return super(SearchView, self).get_queryset()
 
 
 class StudentCreateView(CreateView):
@@ -45,3 +48,26 @@ class CourseCreateView(FormView):
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
+
+
+class StudentUpdateView(UpdateView):
+    template_name = 'create_student.html'
+    model = Student
+    form_class = StudentUpdateForm
+    pk_url_kwarg = 'student_id'
+    success_url = '/'
+
+
+class CourseUpdateView(UpdateView):
+    template_name = 'create_course.html'
+    model = Course
+    form_class = CourseCreateForm
+    pk_url_kwarg = 'course_id'
+
+    def get_success_url(self):
+        return reverse_lazy('add_update:course_update', args=(self.kwargs['course_id'], ))
+
+
+class ProfileView(LoginRequiredMixin, TemplateView):
+    template_name = 'profile.html'
+

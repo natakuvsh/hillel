@@ -1,7 +1,7 @@
 from django import template
-from django_school.models import Course, Student
+from django_school.models import Course, Student, Group, Category
 from django.db.models import Count
-
+from celery import Celery
 
 register = template.Library()
 
@@ -23,3 +23,13 @@ def get_popular_courses():
         'course_list': Course.objects.get_prefetched_selected().annotate(popular=Count('student')).order_by('-popular')[:5]
     }
 
+@register.inclusion_tag('includes/course_list.html')
+def get_courses_by_category(cat_id):
+    return {
+        'course_list': Course.objects.filter(group__category=cat_id).distinct(),
+        'group_list': Group.objects.filter(category=cat_id)
+    }
+
+@register.simple_tag()
+def get_name_by_cat_id(cat_id):
+    return Category.objects.get(id=cat_id)

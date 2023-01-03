@@ -1,8 +1,9 @@
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, FormView, CreateView, View, UpdateView, TemplateView
-from django_school.models import Student, Teacher, Group, Course
+from django_school.models import Student, Teacher, Group, Course, Category
 from django_school.forms import CourseCreateForm, StudentCreateForm, StudentUpdateForm
 
 
@@ -17,6 +18,17 @@ class IndexView(ListView):
         return queryset.model.objects.get_prefetched_selected()
 
 
+class CategoryView(ListView):
+    template_name = 'course_by_cat.html'
+    model = Course
+    paginate_by = 10
+
+    def get_queryset(self):
+        self.category = get_object_or_404(Category, id=self.kwargs['category_id'])
+        return Course.objects.filter(group__category=self.category)
+
+
+
 class SearchView(IndexView):
 
     def get_queryset(self):
@@ -28,6 +40,7 @@ class SearchView(IndexView):
                 Q(theses__icontains=query)
             )
         return super(SearchView, self).get_queryset()
+
 
 
 class StudentCreateView(CreateView):
@@ -66,6 +79,13 @@ class CourseUpdateView(UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('add_update:course_update', args=(self.kwargs['course_id'], ))
+
+
+class CourseByCat(UpdateView):
+    template_name = 'course_by_cat.html'
+    model = Course
+    pk_url_kwarg = 'cat_id'
+    success_url = '/'
 
 
 class ProfileView(LoginRequiredMixin, TemplateView):

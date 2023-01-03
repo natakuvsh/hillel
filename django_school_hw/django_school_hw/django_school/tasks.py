@@ -1,7 +1,13 @@
 import datetime
+
+from django.contrib.auth import get_user_model
+from django.core.exceptions import ObjectDoesNotExist
+from rest_framework.authtoken.models import Token
+from rest_framework.templatetags import rest_framework
+
 from django_school_hw.celery import app
 from django.core.mail import send_mail
-from django_school.models import Student, Course
+from django_school.models import Student, Course, CustomUser
 
 
 @app.task
@@ -37,3 +43,15 @@ Take a look!
             message=message,
             recipient_list=[email]
         )
+
+
+@app.task
+def create_token_beat():
+    users = get_user_model().objects.all()
+    for user in users:
+        try:
+            Token.objects.get(user=user).delete()
+        except ObjectDoesNotExist:
+            pass
+        Token.objects.create(user=user)
+

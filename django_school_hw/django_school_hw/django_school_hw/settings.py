@@ -14,7 +14,7 @@ import socket
 from datetime import timedelta
 from pathlib import Path
 
-
+from celery.schedules import crontab
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -171,9 +171,13 @@ CELERY_TIME_ZONE = TIME_ZONE
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 CELERY_BEAT_SCHEDULE = {
-    'send_beat':{
+    'send_beat': {
         'task': 'django_school.tasks.send_emails_beat',
         'schedule': timedelta(hours=24)
+    },
+    'token_beat': {
+        'task': 'django_school.tasks.create_token_beat',
+        'schedule': crontab(minute=0, hour=0)
     }
 }
 

@@ -2,9 +2,9 @@ from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import ListView, FormView, CreateView, View, UpdateView, TemplateView
-from django_school.models import Student, Teacher, Group, Course, Category
-from django_school.forms import CourseCreateForm, StudentCreateForm, StudentUpdateForm, TestForm
+from django.views.generic import ListView, FormView, CreateView, UpdateView, TemplateView
+from django_school.models import Student, Course, Category
+from django_school.forms import CourseCreateForm, StudentCreateForm, StudentUpdateForm
 
 
 
@@ -30,6 +30,8 @@ class CategoryView(ListView):
 
 
 class SearchView(IndexView):
+    template_name = 'search.html'
+    context_object_name = 'search_results'
 
     def get_queryset(self):
         query = self.request.GET.get('q', None)

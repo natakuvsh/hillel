@@ -1,0 +1,67 @@
+{% load static %}
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href=
+"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+  <!-- Internal CSS styling -->
+  <style>
+    .content {
+      text-align: center;
+      padding: 30px;
+      margin: 0px auto;
+    }
+
+    .details {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    img {
+      border-radius: 5px;
+      box-shadow: black;
+    }
+
+    table,
+    td {
+      border-collapse: collapse;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+      padding: 10px;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="content">
+    <div class="head">
+      <h1 id="head">Teachers</h1>
+    </div>
+
+    <div class="details">
+      <table>
+        <tr id="name">
+          <td>Name</td>
+        </tr>
+        <tr id="age">
+          <td>Age</td>
+        </tr>
+        <tr id="email">
+          <td>Email</td>
+        </tr>
+        <tr id="groups">
+          <td>Group</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+<script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+<script src="{% static 'js/api.js' %}"></script>
+</body>
+
+</html>

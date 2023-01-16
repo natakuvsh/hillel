@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.utils.safestring import mark_safe
 from django_school import models
 from django_school.forms import CourseCreateForm
-from django_school.models import Teacher, Group, Student, Course, Category, CustomUser, Rate
+from django_school.models import Teacher, Group, Student, Course, Category, CustomUser, Rate, NewLot
 
 
 class CourseAdmin(admin.ModelAdmin):
@@ -38,3 +38,4 @@ admin.site.register(Course, CourseAdmin)
 admin.site.register(Category)
 admin.site.register(CustomUser)
 admin.site.register(Rate)
+admin.site.register(NewLot)

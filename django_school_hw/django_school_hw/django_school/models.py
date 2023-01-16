@@ -3,6 +3,8 @@ from django.db import models
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 
+from django_school_hw import settings
+
 
 def course_upload_path(obj, file):
     return f'course/{obj.name}/{file}'
@@ -35,11 +37,26 @@ class StudentManager(models.Manager):
         )
 
 
+
+
+
+
+
+
+
+
+class Group(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+
 class NameAgeEmail(models.Model):
     name = models.CharField(max_length=255)
     age = models.PositiveIntegerField(null=True)
     email = models.EmailField(max_length=255, unique=True)
-    group = models.ManyToManyField("django_school.Group")
+    group = models.ManyToManyField(Group)
 
     class Meta:
         abstract = True
@@ -52,26 +69,12 @@ class Teacher(NameAgeEmail):
     pass
 
 
-class Student(NameAgeEmail):
-    surname = models.CharField(max_length=255, unique=True, null=False)
-    course = models.ForeignKey("django_school.Course", on_delete=models.SET_NULL, null=True)
-
-    objects = StudentManager()
-
-
-class Group(models.Model):
-    name = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.name
-
-
 class Course(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField()
-    teacher = models.ForeignKey("Teacher", on_delete=models.SET_NULL, null=True, blank=True)
+    teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True, blank=True)
     theses = models.TextField()
-    group = models.ManyToManyField("Group")
+    group = models.ManyToManyField(Group)
     image = models.ImageField(upload_to=course_upload_path, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -82,9 +85,16 @@ class Course(models.Model):
         return self.name
 
 
+class Student(NameAgeEmail):
+    surname = models.CharField(max_length=255, unique=True, null=False)
+    course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True)
+
+    objects = StudentManager()
+
+
 class Category(models.Model):
     name = models.CharField(max_length=255)
-    group = models.ManyToManyField("Group")
+    group = models.ManyToManyField(Group)
 
     def __str__(self):
         return self.name
@@ -105,10 +115,15 @@ class Rate(models.Model):
         return self.vendor
 
 
-class Lot(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-    bid = models.DecimalField(max_digits=20, decimal_places=1)
+
+class NewLot(models.Model):
+    name = models.CharField(max_length=255,unique=True)
+    bid = models.DecimalField(max_digits=15, decimal_places=1)
     closed = models.BooleanField(default=False)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return self.name
 
 
 @receiver(post_save, sender=Course)

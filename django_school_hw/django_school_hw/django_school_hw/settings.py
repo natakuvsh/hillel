@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     'sorl.thumbnail',
+    'channels'
 ]
 
 MIDDLEWARE = [
@@ -90,7 +91,13 @@ WSGI_APPLICATION = 'django_school_hw.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db.sqlite3',
+    }
+}
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -109,13 +116,13 @@ CACHES = {
         'LOCATION': 'cache:11211',
     }
 }
+'''
 
-"""
 try:
     from local_settings import *
 except ImportError:
     pass
-"""
+
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -211,4 +218,9 @@ REST_FRAMEWORK = {
     ]
 }
 
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
 ASGI_APPLICATION = "django_school_hw.asgi.application"

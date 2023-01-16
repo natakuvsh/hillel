@@ -35,5 +35,7 @@ urlpatterns = [
     path('__debug__/', include('debug_toolbar.urls')),
     path('course/<int:pk>/', views.CourseDetailView.as_view(), name='course'),
     path('lots/', views.LotsView.as_view(), name='lots'),
+    path('lot/<int:lot_id>/', views.LotUpdateView.as_view(), name='lot'),
+    path('lot/close/<int:lot_id>/', views.LotCloseView.as_view(), name='lot_close'),
     path('lot/create/', views.CreateLotView.as_view(), name='create_lot')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

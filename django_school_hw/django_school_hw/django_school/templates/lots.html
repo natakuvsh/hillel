@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<p> </p>
+<div class="d-flex justify-content-center">
+  <button class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#lotCreate">Add a new lot!</button>
+</div>
+<p> </p>
+{% if object_list %}
+
+    <ul class="list-group">
+      {% for lot in object_list %}
+        {% if not lot.closed %}
+  <li class="list-group-item">
+  <a href="{% url 'lot' lot_id=lot.id %}" style="color: #0060B6;text-decoration: none;"> {{ lot.name }} </a>
+      <span class="badge alert-secondary">{{ lot.bid }} </span>
+       {% if user.is_authenticated  and user == lot.creator %}
+      <button value="{{ lot.id }}" class="align-self-end btn btn-outline-danger btn-sm" style="margin-top: auto;">Close</button>
+        {% endif %}
+  </li>
+{% endif %}
+      {% endfor %}
+</ul>
+{% else %}
+<div>
+ <h1 style="text-align: center">There is no lots available</h1>
+</div>
+{% endif %}
+
+    <div class="modal fade" id="lotCreate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" >Create a lot</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {% include 'includes/create_lot.html' %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="lot-create-btn" >Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock content %}
+
+{% block js %}
+    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+    <script src="{% static 'js/lots.js' %}"></script>
+{% endblock js %}

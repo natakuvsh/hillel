@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import path, include
@@ -30,5 +31,11 @@ urlpatterns = [
     path('profile/', views.ProfileView.as_view(), name='profile'),
     path('', include(('django_school.urls', 'django_school'), namespace='add_update')),
     path('api/v1/', include(('api.urls', 'api'), namespace='api')),
+    path('api/teachers', views.ApiTeachersView.as_view(), name='api_ui'),
     path('__debug__/', include('debug_toolbar.urls')),
+    path('course/<int:pk>/', views.CourseDetailView.as_view(), name='course'),
+    path('lots/', views.LotsView.as_view(), name='lots'),
+    path('lot/<int:lot_id>/', views.LotUpdateView.as_view(), name='lot'),
+    path('lot/close/<int:lot_id>/', views.LotCloseView.as_view(), name='lot_close'),
+    path('lot/create/', views.CreateLotView.as_view(), name='create_lot')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -35,6 +35,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,7 +49,9 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "bootstrap5",
     "rest_framework",
-    "rest_framework.authtoken"
+    "rest_framework.authtoken",
+    'sorl.thumbnail',
+    'channels'
 ]
 
 MIDDLEWARE = [
@@ -88,7 +91,13 @@ WSGI_APPLICATION = 'django_school_hw.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db.sqlite3',
+    }
+}
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -107,13 +116,13 @@ CACHES = {
         'LOCATION': 'cache:11211',
     }
 }
+'''
 
-"""
 try:
     from local_settings import *
 except ImportError:
     pass
-"""
+
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -149,6 +158,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = (
+     os.path.join(BASE_DIR, 'static'),
+)
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
 
@@ -205,3 +217,10 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ]
 }
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
+ASGI_APPLICATION = "django_school_hw.asgi.application"

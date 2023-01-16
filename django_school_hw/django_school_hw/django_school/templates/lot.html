@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap5 %}
+
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href='{% static "lot.css" %}'>
+{% endblock css %}
+
+
+{% block content %}
+
+    <div class="container">
+    <input id="username" type="hidden" value="{{ user.username }}">
+        <div class="col-md-3">
+        <div class="lot-window">
+            <div class="message">
+                <span>Current bid for lot :</span><b>{{ newlot.name}} - </b>
+                <b id="bid">{{ newlot.bid }}</b>
+            </div>
+        </div>
+        <div class="send">
+            <form method="post" id="lot-form">{% csrf_token %}
+                {% bootstrap_form form %}
+                <div id="results"></div>
+                <button class="send" type="submit" class="btn btn-success" id="form-button">Make a bid!</button>
+            </form>
+        </div>
+    </div>
+
+
+{% endblock content %}
+
+{% block js %}
+    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+    <script src="{% static 'js/lot.js' %}"></script>
+{% endblock js %}

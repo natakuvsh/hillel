@@ -1,4 +1,5 @@
 <!doctype html>
+
 <html lang="en">
   <head>
 
@@ -31,6 +32,9 @@
           </li>
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{% url 'add_update:course_create' %}">Create course</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'lots' %}">Auction</a>
           </li>
         </ul>
         <form action="{% url 'search' %}" method="get" class="d-flex">

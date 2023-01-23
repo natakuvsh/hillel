@@ -1,0 +1,25 @@
+{% for product in product_list %}
+
+        <li class="isotope-item product type-product has-post-thumbnail instock downloadable shipping-taxable purchasable product-type-simple">
+            <div class="image_frame scale-with-grid product-loop-thumb" ontouchstart="this.classList.toggle('hover');">
+                <div class="image_wrapper">
+                    <a href="{% url 'product' pk=product.id %}">
+                        <div class="mask"></div><img width="600" height="600" src="{{ product.image_main.url }}" class="scale-with-grid wp-post-image" />
+                    </a>
+                    <div class="image_links double">{% csrf_token %}
+                        <a rel="nofollow" href="." data-quantity="1" data-id="{{ product.id }}" class="add_to_cart_button product_type_simple"><i class="icon-basket"></i></a><a class="link" href="{% url 'product' pk=product.id %}"><i class="icon-link"></i></a>
+                    </div>
+                </div><a href="{% url 'product' pk=product.id %}"><span class="product-loading-icon added-cart"></span></a>
+            </div>
+            <div class="desc">
+                <h4><a href="{% url 'product' pk=product.id %}">{{ product.name }}</a></h4>
+                <div class="star-rating" title="Rated 5 out of 5">
+                    <span style="width:100%"><strong class="rating">5</strong> out of 5</span>
+                </div>
+                <span class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>{{ product.price }}</span>
+                </del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>{{ product.price }}</span></ins>
+                </span>
+            </div>
+        </li>
+
+{%  endfor  %}

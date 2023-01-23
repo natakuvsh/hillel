@@ -1,0 +1,31 @@
+{% load static %}
+{% load my_tags %}
+
+{% for product in product_list %}
+
+    <div class="column mcb-column one-fourth column_hover_color">
+        <div class="hover_color" style="background:#fafbfa;border-color:#538051;" ontouchstart="this.classList.toggle('hover');">
+            <div class="hover_color_bg" style="background:#fafbfa;border-color:#e2e7e2;">
+                <a href="{% url 'product' pk=product.id %}">
+                    <div class="hover_color_wrapper" style="padding:50px 25px;">
+                        <div class="image_frame image_item no_link scale-with-grid alignnone no_border">
+                            <div class="image_wrapper"><img class="scale-with-grid" src="{{ product.image_main.url }}" width="600" height="250" />
+                            </div>
+                        </div>
+                        <hr class="no_line" style="margin: 0 auto 20px;" />
+                        <div class="image_frame image_item no_link scale-with-grid alignnone no_border">
+                            <div class="image_wrapper"><img class="scale-with-grid" src="{%  static 'content/herbal/images/home_herbal_sep1.png'%}" width="100" height="1" />
+                            </div>
+                        </div>
+                        <hr class="no_line" style="margin: 0 auto 20px;" />
+                        <h4>{{ product.name }}</h4>
+                        <p style="color: #6b7a6b; margin: 0;">
+                            {{ product.description|truncatewords_html:20 }}
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+{%  endfor %}

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load my_tags %}
+
+{% block content %}
+<body class="woocommerce woocommerce-page style-simple layout-full-width nice-scroll-on button-flat if-overlay if-border-hide header-plain header-fw minimalist-header-no sticky-header sticky-tb-color ab-hide subheader-both-center menuo-no-borders menuo-right mobile-tb-left mobile-mini-mr-ll mobile-header-mini">
+    <div id="Wrapper">
+        <div id="Header_wrapper">
+            {% include 'includes/header.html' %}
+            <div id="Subheader" style="padding:30px 0;">
+                <div class="container">
+                    <div class="column one">
+                        <h1 class="title">{% get_name_by_cat_id view.kwargs.category_id %}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="Content">
+            <div class="content_wrapper clearfix">
+                <div class="sections_group">
+                    <div class="section">
+                        <div class="section_wrapper clearfix">
+                            <div class="items_group clearfix">
+                                <div class="column one woocommerce-content">
+                                    <div class="shop-filters">
+                                        <p class="woocommerce-result-count">
+                                            Showing all {{ product_list|length }} results
+                                        </p>
+                                        <form class="woocommerce-ordering" method="get">
+                                            <select name="orderby" class="orderby">
+                                                <option value="popularity">Sort by popularity</option>
+                                                <option value="rating">Sort by average rating</option>
+                                                <option value="date" selected='selected'>Sort by newness</option>
+                                                <option value="price">Sort by price: low to high</option>
+                                                <option value="price-desc">Sort by price: high to low</option>
+                                            </select>
+                                        </form>
+                                    </div>
+                                    <div class="products_wrapper isotope_wrapper">
+                                        <ul class="products grid">
+                                            {% include 'includes/product_list.html' with product_list=product_list %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       {% include 'includes/footer.html' %}
+    </div>
+
+{% endblock content %}

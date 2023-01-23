@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+{% load my_tags %}
+
+
+{% block content %}
+
+    <body class="archive post-type-archive post-type-archive-product woocommerce woocommerce-page style-simple layout-full-width nice-scroll-on button-flat if-overlay if-border-hide header-plain header-fw minimalist-header-no sticky-header sticky-tb-color ab-hide subheader-both-center menuo-no-borders menuo-right mobile-tb-left mobile-mini-mr-ll mobile-header-mini">
+    <div id="Wrapper">
+        <div id="Header_wrapper">
+            {% include 'includes/header.html' %}
+            <div id="Subheader" style="padding:25px 0;">
+                <div class="container">
+                    <div class="column one">
+                        <h1 class="title">Thank You</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="Content">
+            <div class="content_wrapper clearfix">
+                <div class="sections_group">
+                    <div class="section">
+                        <div class="column one woocommerce-content">
+                            <div class="related products" style="text-align: center">
+                                <h2>You may also like</h2>
+                                <div class="products_wrapper isotope_wrapper" style="height: 800px; width: 1000px;">
+                                    <ul class="products">
+                                        {% get_related_products %}
+                                    </ul>
+                                </div>
+                            </div>
+                </div>
+            </div>
+        </div>
+    {% include 'includes/footer.html' %}
+    </div>
+
+{% endblock %}

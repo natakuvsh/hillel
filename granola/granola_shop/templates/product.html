@@ -1,0 +1,125 @@
+{%  extends 'base.html' %}
+{% load static %}
+{% load my_tags %}
+
+{% block content %}
+
+<body class="single single-product woocommerce woocommerce-page style-simple layout-full-width nice-scroll-on button-flat if-overlay if-border-hide header-plain header-fw minimalist-header-no sticky-header sticky-tb-color ab-hide subheader-both-center menuo-no-borders menuo-right mobile-tb-left mobile-mini-mr-ll mobile-header-mini">
+    <div id="Wrapper">
+        <div id="Header_wrapper">
+            {% include 'includes/header.html' %}
+            <div id="Subheader" style="padding:30px 0;">
+                <div class="container">
+                    <div class="column one">
+                        <h2 class="title">Shop</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="Content">
+            <div class="content_wrapper clearfix">
+                <div class="sections_group">
+                    <div class="section">
+                        <div class="section_wrapper clearfix">
+                            <div class="items_group clearfix">
+                                <div class="column one woocommerce-content">
+                                    <div itemscope itemtype="http://schema.org/Product" id="product-73" class="product type-product has-post-thumbnail product_cat-eye-vision product_cat-nervous-system first instock sale shipping-taxable purchasable product-type-simple">
+                                        <div class="column one post-nav minimal">
+
+                                            <a class="prev" href="{% url 'product' pk=product.get_previous.id %}"><i class="icon icon-left-open-big"></i></a>
+
+
+                                            <a class="next" href="{% url 'product' pk=product.get_next.id %}"><i class="icon icon-right-open-big"></i></a>
+
+
+                                            <a class="home" href="{% url 'shop' %}">
+                                                <svg class="icon" width="22" height="22" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M7,2v5H2V2H7 M9,0H0v9h9V0L9,0z" />
+                                                    <path d="M20,2v5h-5V2H20 M22,0h-9v9h9V0L22,0z" />
+                                                    <path d="M7,15v5H2v-5H7 M9,13H0v9h9V13L9,13z" />
+                                                    <path d="M20,15v5h-5v-5H20 M22,13h-9v9h9V13L22,13z" />
+                                                </svg>
+                                            </a>
+                                        </div>
+                                        <div class="product_wrapper clearfix">
+                                            <div class="column one-second product_image_wrapper">
+                                                <span class="onsale"><i class="icon-star"></i></span>
+                                                <div class="images">
+                                                    <div class="image_frame scale-with-grid" ontouchstart="this.classList.toggle('hover');">
+                                                        <div class="image_wrapper">
+                                                            <a href="{{ product.image_main.url }}" class="woocommerce-main-image zoom" data-rel="prettyPhoto[product-gallery]">
+                                                                <div class="mask"></div><img width="600" height="600" src="{{ product.image_main.url }}" class="scale-with-grid wp-post-image" title="home_herbal_product3" />
+                                                            </a>
+                                                            <div class="image_links">
+                                                                <a href="{{ product.image_main.url }}" class="woocommerce-main-image zoom"><i class="icon-search"></i></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="thumbnails columns-3">
+                                                        <div class="image_frame scale-with-grid" ontouchstart="this.classList.toggle('hover');">
+                                                            <div class="image_wrapper">
+                                                                <a href="{{ product.image_inside.url }}" class="woocommerce-main-image zoom" data-rel="prettyPhoto[product-gallery]">
+                                                                    <div class="mask"></div><img width="180" height="180" src="{{ product.image_inside.url }}" class="attachment-shop_thumbnail size-shop_thumbnail" title="home_herbal_product5" caption="" url="{{ product.image_inside.url }}" />
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="image_frame scale-with-grid" ontouchstart="this.classList.toggle('hover');">
+                                                            <div class="image_wrapper">
+                                                                <a href="{{ product.image_plate.url }}" class="woocommerce-main-image zoom" data-rel="prettyPhoto[product-gallery]">
+                                                                    <div class="mask"></div><img width="180" height="180" src="{{ product.image_plate.url }}" class="attachment-shop_thumbnail size-shop_thumbnail" title="home_herbal_product5" caption="" url="{{ product.image_plate.url }}" />
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="column one-second summary entry-summary">
+                                                <h1  class="product_title entry-title">{{ product.name }}</h1>
+                                                <div  itemscope itemtype="http://schema.org/Offer">
+                                                     <p class="price">
+                                                        <del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#8378;</span>{{ product.price }}</span></del><ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#8378;</span>{{ product.price }}</span></ins>
+                                                    </p>
+                                                    <meta  content="12" />
+                                                    <meta  content="USD" />
+                                                    <link  href="http://schema.org/InStock" />
+                                                </div>
+                                                <br style="clear:both;" />
+                                                <div>
+                                                    <p>
+                                                        {{ product.description }}
+                                                    </p>
+                                                </div>
+                                                <form class="cart" method="post" enctype='multipart/form-data'>{% csrf_token %}
+                                                    <div class="quantity">
+                                                        <input id="quantity" type="number" step="1" min="1" max="" name="quantity" value="1" title="Qty" class="input-text qty text" size="4" pattern="[0-9]*" inputmode="numeric" />
+                                                    </div>
+                                                    <div id="results"></div>
+                                                    <button type="submit"  data-id="{{ product.id }}"  id="single_add_to_cart_button" class="add_to_cart_button button alt">
+                                                        Add to cart
+                                                    </button>
+                                                </form>
+                                                <div class="product_meta">
+                                                   <span style="font-size: 20px" class="posted_in">Categories: <a href="{% url 'categories' category_id=product.category.id %}" rel="tag">{{ product.category }}</a></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="related products">
+                                            <h2>Related Products</h2>
+                                            <div class="products_wrapper isotope_wrapper">
+                                                <ul class="products">
+                                                    {% get_related_products %}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% include 'includes/footer.html' %}
+    </div>
+
+{% endblock content %}

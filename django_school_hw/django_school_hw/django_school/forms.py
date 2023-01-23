@@ -1,9 +1,10 @@
 from django import forms
-from django_school.models import Course, Student
+from django.core.exceptions import ValidationError
+from django_school.models import Course, Student, NewLot
 from django_school.tasks import send_emails_new_course
 
-class StudentCreateForm(forms.ModelForm):
 
+class StudentCreateForm(forms.ModelForm):
     age = forms.IntegerField(min_value=18, max_value=130)
 
     class Meta:
@@ -31,7 +32,6 @@ class StudentCreateForm(forms.ModelForm):
 
 
 class CourseCreateForm(forms.ModelForm):
-
     class Meta:
         model = Course
         fields = '__all__'
@@ -47,7 +47,6 @@ class CourseCreateForm(forms.ModelForm):
 
 
 class StudentUpdateForm(forms.ModelForm):
-
     class Meta:
         model = Student
         fields = '__all__'
@@ -60,4 +59,22 @@ class StudentUpdateForm(forms.ModelForm):
         self.fields['course'].queryset = Course.objects.order_by('-name')
         self.fields['surname'].widget.attrs['readonly'] = True
         self.fields['age'].widget.attrs['readonly'] = True
+
+
+class CreateLotForm(forms.ModelForm):
+    class Meta:
+        model = NewLot
+        fields = ('name', 'bid')
+
+
+class UpdateLotForm(forms.ModelForm):
+    class Meta:
+        model = NewLot
+        fields = ('bid',)
+
+
+class CloseLotForm(forms.ModelForm):
+    class Meta:
+        model = NewLot
+        fields = ('closed',)
 

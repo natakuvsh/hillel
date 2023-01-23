@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<body class="archive post-type-archive post-type-archive-product woocommerce woocommerce-page style-simple layout-full-width nice-scroll-on button-flat if-overlay if-border-hide header-plain header-fw minimalist-header-no sticky-header sticky-tb-color ab-hide subheader-both-center menuo-no-borders menuo-right mobile-tb-left mobile-mini-mr-ll mobile-header-mini">
+    <div id="Wrapper">
+        <div id="Header_wrapper">
+            {% include 'includes/header.html' %}
+            <div id="Subheader" style="padding:25px 0;">
+                <div class="container">
+                    <div class="column one">
+                        <h1 class="title">Checkout</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="Content">
+            <div class="content_wrapper clearfix">
+                <div class="sections_group">
+                    <div class="section">
+                        <div class="section_wrapper clearfix">
+                            <div class="items_group clearfix"style="display: table">
+                                <div class="col-md-4 mb-4" style="display: table-cell">
+                                    <form method="POST" class="card-body">{% csrf_token %}
+                                        <div class="md-form mb-5">
+                                            <label for="id_first_name">First name:</label>
+                                            <input type="text" name="first_name" maxlength="100" value="{{ user.first_name }}" placeholder="{{ user.first_name}}" id="first_name">
+                                        </div>
+                                        <div class="md-form mb-5">
+                                            <label for="id_last_name">Last name:</label>
+                                            <input type="text" name="last_name" maxlength="100" value="{{ user.last_name }}" placeholder="{{ user.last_name}}" id="last_name">
+                                        </div>
+                                        {{ form.as_table }}
+                                        <hr class="mb-4">
+                                        <button class="btn btn-primary btn-lg btn-block" id="checkout_btn" type="submit">Continue to checkout</button>
+                                    </form>
+                                </div>
+                                <div class="col-md-4 mb-4 cart" style="display: table-cell;padding-left: 100px;">
+                                <table class="table">
+                                    <thead>
+                                    <p>
+                                    <h3 style="text-align: center">Your cart</h3>
+                                    </p>
+                                    <tr>
+                                        <th scope="col">Picture</th>
+                                        <th scope="col">Item Name</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Total Item Price</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    {% for order_product in order_items %}
+                                        <tr>
+                                            <td><img src="{{ order_product.product.image_main.url }}" style="width: 100px;height: 100px"></td>
+                                            <td>{{ order_product.product }}</td>
+                                            <td>{{ order_product.product.price}}</td>
+                                            <td>{{ order_product.quantity }}</td>
+                                            <td>{{ order_product.get_total_item_price}}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    {% if total %}
+                                        <tr>
+                                            <td colspan="4"><b>Total Order Price</b></td>
+                                            <td>{{ total }}</td>
+                                        </tr>
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+
+                                    <div class="back-to-shop"><a href="{% url 'cart' %}" style="padding-top: 15px">&leftarrow;</a><a class="tp-caption home_herbal_button  btn-lg tp-resizeme" href="{% url 'cart' %}" target="_self" id="slide-1-layer-5" data-x="30" data-y="430" data-width="['auto']" data-height="['auto']"  data-transform_idle="o:1;" data-transform_hover="o:1;rX:0;rY:0;rZ:0;z:0;s:300;e:Linear.easeNone;" data-style_hover="c:rgba(28, 78, 42, 1.00);bg:rgba(216, 220, 214, 1.00);br:0px 0px 0px 0px;" data-transform_in="y:50px;opacity:0;s:900;e:Power2.easeInOut;" data-transform_out="opacity:0;s:300;" data-start="900" data-splitin="none" data-splitout="none" data-actions='' data-responsive_offset="on" style="z-index: 7; white-space: nowrap; line-height: 22px; font-size: 16px;">Back to shop </a>
+                                </li>
+                                </div>
+                            </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% include 'includes/footer.html' %}
+    </div>
+
+
+
+{% endblock content %}

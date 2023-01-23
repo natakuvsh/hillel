@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+
+{% block content %}
+
+    <body class="archive post-type-archive post-type-archive-product woocommerce woocommerce-page style-simple layout-full-width nice-scroll-on button-flat if-overlay if-border-hide header-plain header-fw minimalist-header-no sticky-header sticky-tb-color ab-hide subheader-both-center menuo-no-borders menuo-right mobile-tb-left mobile-mini-mr-ll mobile-header-mini">
+    <div id="Wrapper">
+        <div id="Header_wrapper">
+            {% include 'includes/header.html' %}
+            <div id="Subheader" style="padding:25px 25px;">
+                <div class="container">
+                    <div class="column one">
+                        <h1 class="title">Profile</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="Content">
+            <div class="content_wrapper clearfix">
+                <div class="sections_group">
+                    <div class="section">
+                        <div class="column one woocommerce-content">
+                            <div class="container align_center center" >
+                                    <div class="mb-3">
+                                        <label class="form-label" for="id_email">Email address</label>
+                                        <input type="email" name="email" maxlength="254" readonly="" class="form-control" placeholder="{{ user.email }}" title="" required="" id="id_email">
+                                    </div>
+                                    <form action="." method="post" enctype="multipart/form-data">{% csrf_token %}
+                                    <div class="mb-3">
+                                        <label class="form-label" for="id_first_name">First name</label>
+                                        <input type="text" name="first_name" maxlength="255" class="update_profile form-control" placeholder="{{ user.first_name }}" title="" required="" id="first_name">
+                                    </div>
+                                    </form>
+                                        <form action="." method="post" enctype="multipart/form-data">{% csrf_token %}
+                                    <div class="mb-3">
+                                        <label class="form-label" for="id_last_name">Last name</label>
+                                        <input type="text" name="last_name" maxlength="255" class="update_profile form-control" placeholder="{{ user.last_name }}" title="" required="" id="last_name">
+                                    </div>
+                                        </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% include 'includes/footer.html' %}
+    </div>
+
+{% endblock %}
+

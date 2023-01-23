@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap5 %}
+
+{% block content %}
+
+<body class="archive post-type-archive post-type-archive-product woocommerce woocommerce-page style-simple layout-full-width nice-scroll-on button-flat if-overlay if-border-hide header-plain header-fw minimalist-header-no sticky-header sticky-tb-color ab-hide subheader-both-center menuo-no-borders menuo-right mobile-tb-left mobile-mini-mr-ll mobile-header-mini">
+    <div id="Wrapper">
+        <div id="Header_wrapper">
+            {% include 'includes/header.html' %}
+            <div id="Subheader" style="padding:25px 0;">
+                <div class="container">
+                    <div class="column one">
+                        <h1 class="title">Cart</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="Content">
+            <div class="content_wrapper clearfix">
+                <div class="sections_group">
+                    <div class="section">
+                        <div class="column one woocommerce-content">
+                            <div class="shop-filters ">
+                                {% if not order %}
+                                    <div class="container">
+                                        <div class="column one">
+                                            <h3 class="title center align_center">Your cart is empty</h3>
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Item Name</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Total Item Price</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for order_product in order %}
+                                        <tr>
+                                            <th scope="row">{{ forloop.counter }}</th>
+                                            <td>{{ order_product.product }}</td>
+                                            <td>
+                                                {{ order_product.product.price}}
+                                            </td>
+                                            <td>{% csrf_token %}
+                                                <a href="#" data-id="{{ order_product.product.id }}" class="reduce_from_cart_button">
+                                                    <i class="icon-left-open-big"></i>
+                                                </a>
+                                                {{ order_product.quantity }}
+                                                <a href="#" data-id="{{ order_product.product.id }}" data-quantity ="1" class="add_to_cart_button">
+                                                    <i class="icon-right-open-big"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                {{ order_product.get_total_item_price}}
+                                                <a href="#">
+                                                    <i class="fas fa-trash float-right text-danger"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                {% endif %}
+                                <tr>
+                                    <td colspan="5">
+                                        <a href="{% url 'shop' %}" class="btn btn-primary float-right">Continue Shopping</a>
+                                    </td>
+                                </tr>
+
+                                {% if total %}
+
+                                    <tr>
+                                        <td colspan="4"><b>Total Order Price</b></td>
+                                        <td>{{ total }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5">
+                                            <a href="{% url 'checkout' %}" class="btn btn-warning float-right ml-2">Checkout</a>
+                                        </td>
+                                    </tr>
+
+                                {% endif %}
+                                </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% include 'includes/footer.html' %}
+    </div>
+
+{% endblock content %}

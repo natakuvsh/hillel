@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<body class="archive post-type-archive post-type-archive-product woocommerce woocommerce-page style-simple layout-full-width nice-scroll-on button-flat if-overlay if-border-hide header-plain header-fw minimalist-header-no sticky-header sticky-tb-color ab-hide subheader-both-center menuo-no-borders menuo-right mobile-tb-left mobile-mini-mr-ll mobile-header-mini">
+    <div id="Wrapper">
+        <div id="Header_wrapper">
+            {% include 'includes/header.html' %}
+            <div id="Subheader" style="padding:25px 0;">
+                <div class="container">
+                    <div class="column one">
+                        <h1 class="title">Checkout</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="Content">
+            <div class="content_wrapper clearfix">
+                <div class="sections_group">
+                    <div class="section">
+                        <div class="section_wrapper clearfix">
+                            <div class="items_group clearfix">
+                                <div class="col-md-4 mb-4">
+                                    <form method="POST" class="card-body">{% csrf_token %}
+                                        <div class="md-form mb-5">
+                                            <label for="id_first_name">First name:</label>
+                                            <input type="text" name="first_name" maxlength="100" value="{{ user.first_name }}" placeholder="{{ user.first_name}}" id="first_name">
+                                        </div>
+                                        <div class="md-form mb-5">
+                                            <label for="id_last_name">Last name:</label>
+                                            <input type="text" name="last_name" maxlength="100" value="{{ user.last_name }}" placeholder="{{ user.last_name}}" id="last_name">
+                                        </div>
+                                        {{ form.as_table }}
+                                        <hr class="mb-4">
+                                        <button class="btn btn-primary btn-lg btn-block" id="checkout_btn" type="submit">Continue to checkout</button>
+                                    </form>
+                                </div>
+                                <div class="col-md-4 mb-4 cart">
+                                    <div class="title">
+                                        <div class="row">
+                                            <div class="col"><h4><b>Yout cart</b></h4></div>
+                                            <div class="col align-self-center text-right text-muted">3 items</div>
+                                        </div>
+                                    </div>
+                                    <div class="row border-top border-bottom">
+                                        {% for order in order_list %}
+                                        <div class="row main align-items-center">
+                                            <div class="col-2"><img style="width: 50px;height: 50px" class="img-fluid" src="{{ order.product.image_main.url}}"></div>
+                                            <div class="col">
+                                                <div class="row">{{ order.product }}</div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="row">{{ order.quantity }}</div>
+                                            </div>
+                                            <div class="col">&dollar; {{ order.product.price }} <span class="close">&#10005;</span></div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="back-to-shop"><a href="#">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% include 'includes/footer.html' %}
+    </div>
+
+
+
+{% endblock content %}

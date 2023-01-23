@@ -1,0 +1,69 @@
+{%  load static %}
+{%  load bootstrap5  %}
+
+<div class="header_placeholder"></div>
+<div id="Top_bar">
+    <div class="container">
+        <div class="column one">
+            <div class="top_bar_left clearfix">
+                <div class="logo">
+                    <a id="logo" href="#" title="BeHerbal - BeTheme">
+                        <img class="logo-main scale-with-grid" src="{% static 'content/herbal/images/herbal.png' %}" />
+                    </a>
+                </div>
+                <div class="menu_wrapper">
+                    <nav id="menu" class="menu-main-menu-container">
+                        <ul id="menu-main-menu" class="menu">
+                            <li class="current_page_item">
+                                <a href="{% url 'home' %}"><span>Home</span></a>
+                            </li>
+                            <li class="menu-item menu-item-object-page">
+                                <a class="nav-link dropdown-toggle active" href="{% url 'shop' %}" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span>Shop</span>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    {% for category in categories %}
+                                        <li><a class="dropdown-item" href="{% url 'categories' category_id=category.id %}"> {{ category.name  }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#"><span>About</span></a>
+                            </li>
+                            <li>
+                                <a href="#"><span>Contact</span></a>
+                            </li>
+                            <li>
+                                <a href="{% url 'profile' %}" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" ><span>Profile</span></a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    {% if user.is_authenticated %}
+                                        <li>
+                                            <a class="btn btn-success" aria-current="page" href="{% url 'profile' %}">Profile</a>
+                                        </li>
+                                        <li>
+                                            <a class="btn btn-danger" aria-current="page" href="{% url 'logout' %}">Logout</a>
+                                        </li>
+                                    {% else %}
+                                        <li>
+                                            <a class="btn btn-outline-primary" aria-current="page" href="{% url 'login' %}">Login</a>
+                                        </li>
+                                        <li>
+                                            <a class="btn btn-outline-primary" aria-current="page" href="{% url 'register' %}">Sign up</a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav><a class="responsive-menu-toggle" href="{% url 'cart' %}"><i class="icon-menu-fine"></i></a>
+                </div>
+                <div class="secondary_menu_wrapper"></div>
+                <div class="banner_wrapper"></div>
+            </div>
+            <div class="top_bar_right">
+                <div class="top_bar_right_wrapper">
+                    <a id="header_cart" href="{% url 'cart' %}"><i class="icon-bag-fine"></i><span> {% if users_items %} {{ users_items }} {% else %} 0 {% endif %} </span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

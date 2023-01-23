@@ -161,7 +161,12 @@ class CheckoutView(LoginRequiredMixin, FormView):
     def get_context_data(self, **kwargs):
         context = super(CheckoutView, self).get_context_data()
         order = OrderProduct.objects.filter(user=self.request.user, ordered=False)
-        context['order_list'] = order
+        total_price = 0
+        for order_item in order:
+            total_price += order_item.get_total_item_price()
+
+        context['order_items'] = order
+        context['total'] = total_price
         return context
 
     def form_valid(self, form):
